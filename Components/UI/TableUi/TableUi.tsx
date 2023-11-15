@@ -33,25 +33,44 @@ export default function TableUi(props: any) {
     const [page, setPage] = React.useState(1);
 
     // const handlePage = (page: React.SetStateAction<number>) => setPage(page);
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(4)
     const [fetchedData, setFetchData] = useState([])
     const token = useBearerToken()
     // const { fetchedData, refetch } = useQueryFetch(API_NAME)
     // setFetchData(fetchedData)
 
+
     useEffect(() => {
-        axios.get(`https://api.fitpeps.com/${API_NAME}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token
-                }
-            }).then((res) => {
-                console.log(res, '44444444')
-                setFetchData(res.data.result)
-            }).catch((err) => {
-                console.log(err, '5555555')
-            })
+        if (path == '/videos') {
+            axios.get(`https://api.fitpeps.com/${API_NAME}/:${category}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    }
+                }).then((res) => {
+                    console.log(res, '44444444')
+                    setFetchData(res.data.result)
+                }).catch((err) => {
+                    console.log(err, '5555555')
+                })
+
+
+        } else {
+
+            axios.get(`https://api.fitpeps.com/${API_NAME}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    }
+                }).then((res) => {
+                    console.log(res, '44444444')
+                    setFetchData(res.data.result)
+                }).catch((err) => {
+                    console.log(err, '5555555')
+                })
+        }
     }, [category])
 
     const categoryList = useQueryFetch('category').fetchedData

@@ -37,19 +37,10 @@ export default function paGride() {
         },
 
         // validationSchema: employeeShema,
-        validate: (values) => {
-            console.log(values, '99999999')
-            if (values.image == '') {
-                message.error('Please add image')
-            }
-            if (values.name === '') {
-                message.error('Please add Category Name')
-            }
 
-        },
         onSubmit: (values) => {
 
-            console.log("values", values);
+            console.log("values22222222222222", values);
 
 
             axios.post(`${BASE_URL}category`, {
@@ -66,7 +57,9 @@ export default function paGride() {
 
             ).then((res: any) => {
                 console.log(res, 'ppppppppppppppp')
-                // router.back();
+                router.back();
+            }).catch((err) => {
+                console.log(err, '_______________')
             })
 
         },

@@ -51,7 +51,7 @@ function page() {
         // validationSchema: employeeShema,
 
         onSubmit: (values) => {
-
+            console.log('eeeeeeeeeeeeeeeeeeeeeeee', video)
             axios.post(`${BASE_URL}video`, {
 
                 title: values.title,
@@ -71,7 +71,8 @@ function page() {
                 if (res.data.success) {
 
                     message.success('Video Added Successfully');
-                    router.push('/videos')
+                    router.back()
+                    // router.push('/videos')
 
                 } else {
                     console.log(res, '66666666666666666')
