@@ -104,7 +104,7 @@ export default function VideoPreview(props: any) {
 
                 <Typography sx={{ my: 0.5, fontWeight: "bold", color: "#566573", }}>{title}</Typography>
                 {videoUrl ?
-                    <video controls >
+                    <video controls width="320" height="240" autoPlay controlsList="nodownload" onContextMenu={(e) => e.preventDefault()} >
                         <source src={videoUrl} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>

@@ -123,8 +123,22 @@ export const subRoutes: any = [
 
 
     //testimonials
+    // {
+    //     name: 'Settings',
+    //     icon: SettingsIcon,
+    //     children: [
+    //         // {
+    //         //     text: "Reset Password",
+    //         //     path: '/resetpassword'
+    //         // },
+    //         {
+    //             text: "Logout",
+    //             path: '/logout'
+    //         },
+    //     ]
+    // },
     {
-        name: 'Settings',
+        name: 'Logout',
         icon: SettingsIcon,
         children: [
             // {

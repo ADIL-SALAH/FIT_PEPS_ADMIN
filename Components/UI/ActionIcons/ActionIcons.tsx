@@ -12,7 +12,7 @@ import { message } from 'antd';
 
 export const Edit = (props: any) => {
 
-    const { id, path } = props;
+    const { id, path, } = props;
 
     const router = useRouter();
 
@@ -41,7 +41,7 @@ export const Edit = (props: any) => {
 
 export const Delete = (props: any) => {
 
-    const { id, url } = props;
+    const { id, url, setReload, reload } = props;
     const router = useRouter();
 
     const deleteItem = () => {
@@ -63,7 +63,7 @@ export const Delete = (props: any) => {
             } else {
                 message.error(res.data.message, 1)
             }
-            router.refresh
+            setReload(!reload)
         })
     }
 

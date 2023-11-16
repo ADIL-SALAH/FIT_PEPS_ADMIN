@@ -14,7 +14,6 @@ export const SideBar = () => {
 
 
     const { fetchedData, refetch } = useQueryFetch('category')
-    console.log(fetchedData, '00000000000000000')
     const [isExpand, setIsExpand] = useState(true)
 
     const router = useRouter()

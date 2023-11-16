@@ -5,9 +5,9 @@ import { Grid } from '@mui/material';
 import { usePathname } from 'next/navigation';
 
 function page() {
-    const TABLE_HEAD = ["Video Name", "Language", "Code", "Description"];
+    const TABLE_HEAD = ["Video Name", "Language", "Description"];
 
-    const TABLE_CELL = ["firstName", "language", "whatsApp", "state"];
+    const TABLE_CELL = ["title", "language.name", "description"];
     // const pathName = usePathname()
     // if (pathName === '/videos') {
 
@@ -24,7 +24,7 @@ function page() {
 
                 TABLE_HEAD={TABLE_HEAD}
 
-                API_NAME="video/list"
+                API_NAME="video"
 
                 isSearch={true}
 

@@ -18,7 +18,7 @@ export const useQueryFetch = (url: any) => {
             res.json()
         )
     )
-    console.log(fetchedData, 'ppppppppppppp')
+    // console.log(fetchedData, 'ppppppppppppp')
 
     return { fetchedData: fetchedData?.result, refetch }
 

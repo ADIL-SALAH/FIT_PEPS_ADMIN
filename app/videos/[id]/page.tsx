@@ -8,9 +8,9 @@ import { Grid } from '@mui/material';
 import { CustomTextField } from '../../../Components/TextField/TextField';
 import VideoPreview from '../../../Components/UI/VideoPreview/VideoPreview';
 import CustomDropDown from '../../../Components/CustomDropDown/CustomDropDown';
-import { useQueryFetch } from '../../../hooks/useFetch';
+import { useQueryFetch, useQueryFetchById } from '../../../hooks/useFetch';
 import { message } from 'antd';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import FormHeader from '../../../Components/CustomeForm/FormHeader';
 
 function page() {
@@ -34,7 +34,9 @@ function page() {
     const language = [{ id: 22, name: 'English' }, { id: 20, name: 'Tamil' }]
 
     // const language = useQueryFetch('languages').fetchedData;
-
+    const id = usePathname().split('/')[2]
+    const finalData = useQueryFetchById('testimonials', 3).fetchedData
+    console.log(finalData, '{{{{{{{{{{{{{', id)
     const formik = useFormik({
 
         initialValues: {
@@ -111,7 +113,7 @@ function page() {
     ]
 
     return (
-        <Grid container sx={{ bgcolor: '', padding: '40px' }}>
+        <Grid container sx={{ bgcolor: '' }}>
 
             <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
 
