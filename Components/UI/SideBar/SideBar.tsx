@@ -8,6 +8,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { subRoutes } from './helper';
 import Popup from 'reactjs-popup';
 import { useQueryFetch } from '../../../hooks/useFetch';
+import Cookies from 'js-cookie';
 
 
 export const SideBar = () => {
@@ -37,6 +38,11 @@ export const SideBar = () => {
 
         setBool(newArray)
 
+    }
+    const logout = () => {
+        console.log('logouttttttttttttttt')
+        Cookies.remove('auth_token')
+        router.push('/login')
     }
 
     // const Primary_Color = "#182834"
@@ -157,7 +163,7 @@ export const SideBar = () => {
 
                         {bool[index] === true && data?.children?.map((drop: any, index: any) =>
 
-                            <Box key={index} onClick={() => router.push(drop.path)} sx={{
+                            <Box key={index} onClick={drop.text === 'Logout' ? logout : () => router.push(drop.path)} sx={{
                                 width: "100%",
                                 display: "flex",
                                 py: 1.5,
