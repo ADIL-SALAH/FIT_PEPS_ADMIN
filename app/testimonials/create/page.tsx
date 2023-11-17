@@ -8,6 +8,7 @@ import { CustomTextField } from '../../../Components/TextField/TextField'
 import ImagePreview from '../../../Components/UI/ImagePreview/ImagePreview'
 import useBearerToken from '../../../hooks/useBearerToken'
 import { BASE_URL } from '../../../urls/urls'
+import { message } from 'antd'
 
 export default function page() {
 
@@ -55,6 +56,7 @@ export default function page() {
                 }
 
             ).then((res: any) => {
+                message.success('Testimonials added successfully')
                 router.back();
             })
 

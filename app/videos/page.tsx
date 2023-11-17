@@ -2,11 +2,16 @@
 import React from 'react'
 import TableUi from '../../Components/UI/TableUi/TableUi';
 import { Grid } from '@mui/material';
+import { usePathname } from 'next/navigation';
 
 function page() {
-    const TABLE_HEAD = ["Video Name", "Code", "Description"];
+    const TABLE_HEAD = ["Video Name", "Language", "Description"];
 
-    const TABLE_CELL = ["firstName", "whatsApp", "state"];
+    const TABLE_CELL = ["title", "language.name", "description"];
+    // const pathName = usePathname()
+    // if (pathName === '/videos') {
+
+    // }
 
     return (
         <Grid container bgcolor="">

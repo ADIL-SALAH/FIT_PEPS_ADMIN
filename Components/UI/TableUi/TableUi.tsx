@@ -33,29 +33,51 @@ export default function TableUi(props: any) {
     const [page, setPage] = React.useState(1);
 
     // const handlePage = (page: React.SetStateAction<number>) => setPage(page);
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState(4)
+    const [reload, setReload] = useState(true)
     const [fetchedData, setFetchData] = useState([])
     const token = useBearerToken()
     // const { fetchedData, refetch } = useQueryFetch(API_NAME)
     // setFetchData(fetchedData)
 
+
     useEffect(() => {
-        axios.get(`https://api.fitpeps.com/${API_NAME}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token
-                }
-            }).then((res) => {
-                console.log(res, '44444444')
-                setFetchData(res.data.result)
-            }).catch((err) => {
-                console.log(err, '5555555')
-            })
-    }, [category])
+        if (path == '/videos') {
+            axios.get(`https://api.fitpeps.com/${API_NAME}/list?categoryId=${category}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    }
+                }).then((res) => {
+                    // console.log(res, '44444444')
+                    setFetchData(res.data.result)
+                }).catch((err) => {
+                    console.log(err, '5555555')
+                })
+
+
+        } else {
+
+            axios.get(`https://api.fitpeps.com/${API_NAME}`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token
+                    }
+                }).then((res) => {
+                    console.log(res, '44444444')
+                    setFetchData(res.data.result)
+                }).catch((err) => {
+                    console.log(err, '5555555')
+                })
+        }
+    }, [category, reload])
 
     const categoryList = useQueryFetch('category').fetchedData
-    console.log(category, '2222222222')
+    // console.log(category, '2222222222', path, languageList)
+
+
     // const onSearch = (e: any) => {
 
     //     setSearch(e.target.value)
@@ -92,19 +114,23 @@ export default function TableUi(props: any) {
                 alignItems="start" height="fit-content" m={1}>
                 {path !== '/payments' ?
                     <Grid container sx={{
-                        display: API_NAME == 'client' ? 'none' : 'flex',
+                        display: API_NAME == 'client' ? 'none' : 'flex', justifyContent: 'space-between'
                     }}>
+                        <Grid >
 
-                        <PrimaryButton bgcolor={PRIMARY_COLOUR} my={1} onClick={() => router.push(`${path}/create`,)}>Create {API_NAME}</PrimaryButton>
+                            <PrimaryButton bgcolor={PRIMARY_COLOUR} my={1} onClick={() => router.push(`${path}/create`,)}>Create {API_NAME}</PrimaryButton>
+                        </Grid>
                         {/* <PrimaryButton bgcolor={PRIMARY_COLOUR} my={1} onClick={() => router.push(`${path}/create`,)}>Filter By Categories</PrimaryButton> */}
                         {path === '/videos' ?
-                            <Grid>
+                            <Grid >
 
                                 <CustomDropDown fieldName="Filter By Category" dropDownData={categoryList} data={category} setData={setCategory} />
                             </Grid>
                             : null
                         }
-                    </Grid> : null}
+                    </Grid>
+
+                    : null}
 
 
                 {/* {isSearch && <TextField sx={{ mr: 'auto' }}
@@ -119,7 +145,7 @@ export default function TableUi(props: any) {
                 } */}
 
 
-                <TableContainer sx={{ mt: 3, boxShadow: BOX_SHADOWS, borderRadius: "10px" }} >
+                <TableContainer sx={{ mt: 3, boxShadow: BOX_SHADOWS, borderRadius: "10px", mb: 8 }} >
 
 
                     <Table aria-label="simple table">
@@ -152,13 +178,14 @@ export default function TableUi(props: any) {
                                     </TableCell>
                                 )
                                 }
-                                {path != '/users' ?
+                                {path != '/users' && path != '/payments' ?
 
                                     <TableCell align="center">
 
                                         <Typography sx={{ fontWeight: 600, color: "black" }} >Actions</Typography>
 
-                                    </TableCell> : null}
+                                    </TableCell>
+                                    : null}
 
                             </TableRow>
 
@@ -167,7 +194,7 @@ export default function TableUi(props: any) {
                         <TableBody >
                             {fetchedData && fetchedData?.map((data: any, index: any) =>
 
-                                <TableRow onClick={() => { path != '/users' ? router.push(`${path}/${data.id}`) : null }}>
+                                <TableRow onClick={() => { path !== '/users' && path !== '/payments' ? router.push(`${path}/${data.id}`) : null }}>
 
                                     <TableCell align="center">
 
@@ -191,14 +218,14 @@ export default function TableUi(props: any) {
                                             <TableCell
                                                 key={index} sx={{ cursor: 'pointer' }} align="center">
 
-                                                <Typography sx={{ color: TABLE_FONT_COLOUR }}> {items === 'client.firstName' ? data.client.firstName : data[items]} </Typography>
+                                                <Typography sx={{ color: TABLE_FONT_COLOUR }}> {items === 'client.firstName' ? data.client.firstName : items === 'language.name' ? data.language.name : data[items]} </Typography>
 
                                             </TableCell>
 
                                         )}
 
-                                    {path != '/users' ?
-                                        <TableCell align="center" >
+                                    {path != '/users' && path != '/payments' ?
+                                        < TableCell align="center" >
 
                                             <Popup trigger={<MoreVertIcon sx={{ cursor: 'pointer', color: "grey" }} />} position="left center">
 
@@ -211,13 +238,14 @@ export default function TableUi(props: any) {
 
                                                     {/* <Delete url={API_NAME} id={data.id} /> */}
 
-                                                    <Delete url={API_NAME} id={data.id} />
+                                                    <Delete url={API_NAME} id={data.id} setReload={setReload} reload={reload} />
 
                                                 </Grid>
 
                                             </Popup>
 
-                                        </TableCell> : null}
+                                        </TableCell>
+                                        : null}
 
                                 </TableRow>
 
@@ -241,7 +269,7 @@ export default function TableUi(props: any) {
 
             </Grid>
 
-        </Grid>
+        </Grid >
 
 
     )

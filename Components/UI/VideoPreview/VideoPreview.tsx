@@ -9,6 +9,7 @@ import type { UploadProps } from 'antd';
 import { Button, message, Upload } from 'antd';
 import AWS from 'aws-sdk';
 import { VideoCallOutlined } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 
 export default function VideoPreview(props: any) {
 
@@ -16,7 +17,7 @@ export default function VideoPreview(props: any) {
     const { video, setVideo, title } = props;
     const [uploading, setUploading] = React.useState(false);
     const [videoUrl, setVideoUrl] = React.useState('');
-
+    const router = useRouter()
 
     const AddVideos = (event: any) => {
 
@@ -62,7 +63,7 @@ export default function VideoPreview(props: any) {
             if (info.file.status !== 'uploading') {
             }
             if (info.file.status === 'done') {
-                setVideo(info?.file.response.key);
+                setVideo(info?.file.response.Key);
                 const s3 = new AWS.S3({
                     accessKeyId: 'AKIA37K4C6DLEXDWCYP6',
                     secretAccessKey: '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',
@@ -78,7 +79,7 @@ export default function VideoPreview(props: any) {
                 s3.getSignedUrl('getObject', params, (err, url) => {
                     if (err) {
                         console.error("********************", err);
-                        message.error(`filed to load ${info.file.name}.`);
+                        message.error(`failed to load ${info.file.name}.`);
                     } else {
                         setVideoUrl(url);
 
@@ -103,7 +104,7 @@ export default function VideoPreview(props: any) {
 
                 <Typography sx={{ my: 0.5, fontWeight: "bold", color: "#566573", }}>{title}</Typography>
                 {videoUrl ?
-                    <video controls>
+                    <video controls width="320" height="240" autoPlay controlsList="nodownload" onContextMenu={(e) => e.preventDefault()} >
                         <source src={videoUrl} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
