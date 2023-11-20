@@ -22,9 +22,9 @@ export default function ImagePreview(props: any) {
         axios.post(`/image/upload`, formData).then((res) => {
 
             if (res.data.success) {
-                console.log(res)
 
                 setImage(res.data.result)
+                console.log(res, 'kiiiiiiiiiiiiiii', image)
 
                 message.success(res.data.message)
 

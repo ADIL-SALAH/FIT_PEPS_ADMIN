@@ -35,26 +35,25 @@ function page() {
 
     // const language = useQueryFetch('languages').fetchedData;
     const id = usePathname().split('/')[2]
-    const finalData = useQueryFetchById('testimonials', 3).fetchedData
+    const finalData = useQueryFetchById('video', id).fetchedData
     console.log(finalData, '{{{{{{{{{{{{{', id)
     const formik = useFormik({
 
         initialValues: {
 
-            title: '',
-            description: '',
-            video: '',
-            dayNo: '',
-            languageId: '',
-            categoryId: ''
-
+            title: finalData?.title,
+            description: finalData?.description,
+            video: finalData?.video,
+            dayNo: finalData?.dayNo,
+            languageId: finalData?.languageId,
+            categoryId: finalData?.categoryId
         },
 
         // validationSchema: employeeShema,
 
         onSubmit: (values) => {
             console.log('eeeeeeeeeeeeeeeeeeeeeeee', video)
-            axios.post(`${BASE_URL}video`, {
+            axios.patch(`${BASE_URL}video/${id}`, {
 
                 title: values.title,
                 description: values.description,
@@ -88,6 +87,7 @@ function page() {
             })
 
         },
+        enableReinitialize: true
 
         //validationSchema: SignUpSchema
 
@@ -119,15 +119,15 @@ function page() {
 
                 <Grid container sx={{ mx: 4 }}>
 
-                    <FormHeader heading="Create Video" />
+                    <FormHeader heading="Edit Video" edit />
 
                     <Grid md={4}>
 
                         <Grid container>
 
-                            <CustomDropDown fieldName="Category" dropDownData={Category} data={workOutPlan} setData={setWorkoutPlan} />
+                            <CustomDropDown fieldName="Category" dropDownData={Category} data={workOutPlan} setData={setWorkoutPlan} selected={finalData?.categoryId} />
 
-                            <CustomDropDown fieldName="Language" dropDownData={language} data={languageId} setData={setLanguageId} />
+                            <CustomDropDown fieldName="Language" dropDownData={language} data={languageId} setData={setLanguageId} selected={finalData?.languageId} />
 
                         </Grid>
 

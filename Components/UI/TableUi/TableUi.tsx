@@ -218,7 +218,7 @@ export default function TableUi(props: any) {
                                             <TableCell
                                                 key={index} sx={{ cursor: 'pointer' }} align="center">
 
-                                                <Typography sx={{ color: TABLE_FONT_COLOUR }}> {items === 'client.firstName' ? data.client.firstName : items === 'language.name' ? data.language.name : data[items]} </Typography>
+                                                <Typography sx={{ color: TABLE_FONT_COLOUR }}> {data[items]} </Typography>
 
                                             </TableCell>
 
@@ -234,7 +234,7 @@ export default function TableUi(props: any) {
                                                     boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", p: 1,
                                                 }}>
 
-                                                    <Edit path={path} id={data.id} />
+                                                    {path != '/videos' ? <Edit path={path} id={data.id} /> : null}
 
                                                     {/* <Delete url={API_NAME} id={data.id} /> */}
 

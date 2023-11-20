@@ -9,6 +9,7 @@ import ImagePreview from '../../../Components/UI/ImagePreview/ImagePreview'
 import useBearerToken from '../../../hooks/useBearerToken'
 import { BASE_URL } from '../../../urls/urls'
 import { useQueryFetchById } from '../../../hooks/useFetch'
+import FormHeader from '../../../Components/CustomeForm/FormHeader'
 
 export default function page() {
 
@@ -28,6 +29,7 @@ export default function page() {
     const formik = useFormik({
 
         initialValues: {
+            name: finalData?.name,
             rating: finalData?.rating,
             message: finalData?.message,
             image: finalData?.image,
@@ -43,6 +45,7 @@ export default function page() {
 
 
             axios.patch(`${BASE_URL}testimonials/${id}`, {
+                name: values.name,
                 rating: values.rating,
                 message: values.message,
                 image: image,
@@ -64,6 +67,11 @@ export default function page() {
     });
 
     const formItems = [
+        {
+            textFieldName: 'name',
+            id: 'name',
+            type: 'text'
+        },
         {
             textFieldName: 'message',
             id: 'message',
@@ -88,7 +96,9 @@ export default function page() {
 
             <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
 
+                <FormHeader heading="Edit testimonial" edit />
                 <Grid container md={4} sx={{ mx: 4 }}>
+
 
                     <ImagePreview title="Image" image={image} setImage={setImage} />
 

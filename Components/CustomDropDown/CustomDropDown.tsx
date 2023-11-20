@@ -5,9 +5,9 @@ import { useQueryFetchById } from '../../hooks/useFetch';
 
 export default function CustomDropDown(props: any) {
 
-  const { fieldName, dropDownData, data, setData, type, drop } = props;
+  const { fieldName, dropDownData, data, setData, type, drop, selected } = props;
 
-  //console.log("dropDownData", dropDownData);
+  console.log("dropDownData", selected);
 
   const handleChange = (event: SelectChangeEvent) => {
     setData(event.target.value as string);
@@ -36,7 +36,8 @@ export default function CustomDropDown(props: any) {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={data}
+            value={selected ? selected : data}
+
             onChange={handleChange}
           >
 
@@ -46,7 +47,7 @@ export default function CustomDropDown(props: any) {
 
 
               return (
-                <MenuItem key={index} value={item.id}>{item.name}</MenuItem>
+                <MenuItem key={index} value={item.id} selected={item.id === selected ? true : false}>{item.name}</MenuItem>
               )
 
             })

@@ -9,6 +9,7 @@ import ImagePreview from '../../../Components/UI/ImagePreview/ImagePreview'
 import useBearerToken from '../../../hooks/useBearerToken'
 import { BASE_URL } from '../../../urls/urls'
 import { message } from 'antd'
+import FormHeader from '../../../Components/CustomeForm/FormHeader'
 
 export default function page() {
 
@@ -27,6 +28,7 @@ export default function page() {
     const formik = useFormik({
 
         initialValues: {
+            name: '',
             rating: '',
             message: '',
             image: '',
@@ -48,6 +50,7 @@ export default function page() {
                 message: values.message,
                 image: image,
                 remarks: values.remarks,
+                name: values.name
 
             },
 
@@ -56,8 +59,13 @@ export default function page() {
                 }
 
             ).then((res: any) => {
-                message.success('Testimonials added successfully')
-                router.back();
+                if (res.data.success) {
+
+                    message.success('Testimonials added successfully')
+                    router.back();
+                } else {
+                    message.error(res.data.message)
+                }
             })
 
         },
@@ -66,6 +74,12 @@ export default function page() {
     });
 
     const formItems = [
+
+        {
+            textFieldName: 'name',
+            id: 'name',
+            type: "text",
+        },
         {
             textFieldName: 'message',
             id: 'message',
@@ -93,6 +107,7 @@ export default function page() {
             < form style={{
                 width: '100%'
             }} onSubmit={formik.handleSubmit} >
+                <FormHeader heading="Create testimonial" />
 
                 <Grid container md={4} sx={{ mx: 4 }}>
 
@@ -108,7 +123,7 @@ export default function page() {
 
                 </Grid>
 
-                <button>Submit</button>
+                {/* <button>Submit</button> */}
 
             </form >
 
