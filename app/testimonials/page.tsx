@@ -7,7 +7,6 @@ export default function page() {
     const TABLE_HEAD = ["Client", "Message"];
 
     const TABLE_CELL = ["name", "message"];
-
     return (
         <Grid container bgcolor="">
 
